@@ -1,4 +1,11 @@
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+
 import org.junit.Test;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 public class EnumTest {
     public enum MyEnum {
@@ -37,9 +44,25 @@ public class EnumTest {
         MyEnum[] clone = myEnums.clone();
 
 
-
         System.out.println(myEnums == clone);
         System.out.println(myEnums[0] == clone[0]);
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public enum DraftArticleType {
+        ORIGINAL(1, "原创"), EDIT(2, "编译"), UGC(3, "UGC");
+        private int type;
+        @Setter
+        private String desc;
+
+    }
+
+    @Test
+    public void test4() {
+
+        DraftArticleType.ORIGINAL.setDesc("1111");
+        System.out.println(DraftArticleType.ORIGINAL.getDesc());
     }
 
 }
