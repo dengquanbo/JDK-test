@@ -1,5 +1,7 @@
 package refercence;
 
+import org.junit.Test;
+
 import java.lang.ref.SoftReference;
 
 public class SoftReferenceTest {
@@ -34,9 +36,38 @@ public class SoftReferenceTest {
 
         o1 = null;
 
-        byte[] bytes = new byte[5 * 1024 * 1024];
+        byte[] bytes = new byte[3 * 1024 * 1024];
+        byte[] bytes1 = new byte[3 * 1024 * 1024];
+        System.gc();
+
 
         System.out.println(o1);
         System.out.println(s1.get());
+    }
+
+
+    /**
+     * JVM配置`-Xms5m -Xmx5m`
+     */
+    @Test
+    public void test1() {
+        byte[] o1 = new byte[3 * 1024 * 1024];
+        SoftReference<Object> s1 = new SoftReference<Object>(o1);
+
+        System.out.println(o1);
+        System.out.println(s1.get());
+        o1 = null;
+        System.out.println(o1);
+        System.out.println(s1.get());
+
+        System.out.println("--------------------");
+
+        byte[] o2 = new byte[3 * 1024 * 1024];
+        SoftReference<Object> s2 = new SoftReference<Object>(o2);
+
+        System.out.println(o2);
+        System.out.println(s2.get());
+
+        System.out.println("s1是否被回收了" + s1.get());
     }
 }

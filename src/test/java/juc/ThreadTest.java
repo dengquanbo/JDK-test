@@ -2,6 +2,8 @@ package juc;
 
 import org.junit.Test;
 
+import java.lang.management.ManagementFactory;
+
 public class ThreadTest {
     Object object = new Object();
 
@@ -30,6 +32,26 @@ public class ThreadTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(pid());
+        runnable();     // 1
+        //     blocked();      // 2
+        //     waiting();      // 3
+        //     timedWaiting(); // 4
+    }
+
+    public static String pid() {
+        String name = ManagementFactory.getRuntimeMXBean().getName();
+        return name.split("@")[0];
+    }
+
+    public static void runnable() {
+        long i = 0;
+        while (true) {
+            i++;
         }
     }
 

@@ -13,6 +13,36 @@ import java.util.concurrent.atomic.LongAdder;
 
 public class FloatTest {
 
+    @Test
+    public void test1() {
+        System.out.println(0.1 + 0.1 + 0.1);
+        System.out.println(String.format("%.17f", 0.2f));
+        System.out.println(String.format("%.17f", 0.3f));
+        showFloatBits(0.2f);
+
+        System.out.println("------Complementation------");
+        System.out.println(7 % 4);
+        System.out.println((-7) % 4);
+        System.out.println(7 % (-4));
+        System.out.println((-7) % (-4));
+
+        System.out.println();
+        System.out.println("------Modulo Operation------");
+        System.out.println(Math.floorMod(7, 4));
+        System.out.println(Math.floorMod(-7, 4));
+        System.out.println(Math.floorMod(7, -4));
+        System.out.println(Math.floorMod(-7, -4));
+
+        System.out.println(-1 & 1);
+        System.out.println(Integer.toBinaryString(-1));
+        System.out.println(Integer.toBinaryString(1));
+    }
+
+    @Test
+    public void test22(){
+        float v = 1.0f / 0.0f;
+        showFloatBits(1.0f / 0.0f);
+    }
 
     @Test
     public void test112() {

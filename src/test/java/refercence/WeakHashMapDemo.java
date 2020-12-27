@@ -1,5 +1,10 @@
 package refercence;
 
+import org.junit.Test;
+
+import java.lang.ref.PhantomReference;
+import java.lang.ref.ReferenceQueue;
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.WeakHashMap;
 
@@ -37,5 +42,54 @@ public class WeakHashMapDemo {
         System.gc();
         Thread.sleep(1000);
         System.out.println(map);
+    }
+
+    @Test
+    public void test1() throws InterruptedException {
+        Object o1 = new Object();
+        ReferenceQueue<Object> referenceQueue = new ReferenceQueue<Object>();
+        WeakReference<Object> phantomReference = new WeakReference<>(o1, referenceQueue);
+
+        System.out.println(o1);
+        System.out.println(referenceQueue.poll());
+        System.out.println(phantomReference.get());
+
+        o1 = null;
+        System.gc();
+        Thread.sleep(3000);
+
+        System.out.println(o1);
+        System.out.println(referenceQueue.poll()); //引用队列中
+        System.out.println(phantomReference.get());
+    }
+
+    @Test
+    public void test2() {
+        Object o1 = new Object();
+        WeakReference<Object> w1 = new WeakReference<Object>(o1);
+
+        System.out.println(o1);
+        System.out.println(w1.get());
+
+        o1 = null;
+        System.gc();
+
+        System.out.println(o1);
+        System.out.println(w1.get());
+    }
+
+    @Test
+    public void test3() {
+        Object o1 = new Object();
+        WeakReference<Object> w1 = new WeakReference<Object>(o1);
+
+        System.out.println(o1);
+        System.out.println(w1.get());
+
+        o1 = null;
+        System.gc();
+
+        System.out.println(o1);
+        System.out.println(w1.get());
     }
 }

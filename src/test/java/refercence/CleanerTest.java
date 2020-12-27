@@ -1,6 +1,15 @@
 package refercence;
 
+import com.alibaba.fastjson.JSON;
+
+import org.junit.Test;
+
 import sun.misc.Cleaner;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +29,11 @@ public class CleanerTest {
                  第一个参数：需要监控的堆内存对象
                  第二个参数：程序释放资源前的回调。
              */
-            Cleaner.create(obj, new DoSomethingThread("thread_" + index++, obj));
+            Cleaner cleaner = Cleaner.create(obj, new DoSomethingThread("thread_" + index++));
+
+            obj = null;
+
+            System.out.println(cleaner.get());
         }
     }
 
@@ -29,6 +42,9 @@ public class CleanerTest {
 
         private DemoObject obj;
 
+        public DoSomethingThread(String name) {
+            this.name = name;
+        }
         public DoSomethingThread(String name, DemoObject obj) {
             this.name = name;
             this.obj = obj;
@@ -37,13 +53,34 @@ public class CleanerTest {
         // do something before gc
         @Override
         public void run() {
+            System.out.println("111");
             System.out.println(name + " running DoSomething ..." + obj.getName());
         }
     }
 
     @Data
-    @AllArgsConstructor
     static class DemoObject {
         private String name;
+        private List<Object> list = new ArrayList<>(20);
+
+        public DemoObject(String name) {
+            this.name = name;
+        }
     }
+
+    @Test
+    public void test33() throws InterruptedException {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.exit(-1);
+            }
+        }).start();
+
+        Thread.sleep(4000);
+        System.out.println("1111");
+    }
+
+
 }
